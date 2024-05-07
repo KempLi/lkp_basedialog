@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.lkp.dialog.BaseDialog;
+import com.lkp.dialog.CommonDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
                 .setConfirm("冲啊")
                 .setCancel("取消")
                 .setCancelable(true)
-                .setListener(new MessageDialog.OnListener() {
+                .setListener(new CommonDialog.OnListener() {
                     @Override
                     public void onConfirm(BaseDialog dialog) {
                         Toast.makeText(MainActivity.this, "点击了确认", Toast.LENGTH_SHORT).show();

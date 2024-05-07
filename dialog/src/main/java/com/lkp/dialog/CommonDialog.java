@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import com.lkp.dialog.databinding.UiDialogBinding;
@@ -22,6 +23,8 @@ public final class CommonDialog {
     public static class Builder<B extends Builder<?>>
             extends BaseDialog.Builder<B> {
 
+        @Nullable
+        private OnListener mListener;
         private boolean mAutoDismiss = true;
 
         private UiDialogBinding binding;
@@ -78,6 +81,42 @@ public final class CommonDialog {
             if (mAutoDismiss) {
                 dismiss();
             }
+        }
+
+        public void setCommonListener(OnListener listener) {
+            mListener = listener;
+        }
+
+        @Override
+        public void onClick(View view) {
+            int viewId = view.getId();
+            if (viewId == R.id.tv_ui_confirm) {
+                autoDismiss();
+                if (mListener == null) {
+                    return;
+                }
+                mListener.onConfirm(getDialog());
+            } else if (viewId == R.id.tv_ui_cancel) {
+                autoDismiss();
+                if (mListener == null) {
+                    return;
+                }
+                mListener.onCancel(getDialog());
+            }
+        }
+    }
+
+    public interface OnListener {
+
+        /**
+         * 点击确定时回调
+         */
+        void onConfirm(BaseDialog dialog);
+
+        /**
+         * 点击取消时回调
+         */
+        default void onCancel(BaseDialog dialog) {
         }
     }
 }

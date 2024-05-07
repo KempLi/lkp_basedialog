@@ -22,8 +22,6 @@ public final class MessageDialog {
     public static final class Builder
             extends CommonDialog.Builder<Builder> {
 
-        @Nullable
-        private OnListener mListener;
         private MessageDialogBinding binding;
 
         public Builder(Context context) {
@@ -41,8 +39,8 @@ public final class MessageDialog {
             return this;
         }
 
-        public Builder setListener(OnListener listener) {
-            mListener = listener;
+        public Builder setListener(CommonDialog.OnListener listener) {
+            setCommonListener(listener);
             return this;
         }
 
@@ -55,36 +53,5 @@ public final class MessageDialog {
             return super.create();
         }
 
-        @Override
-        public void onClick(View view) {
-            int viewId = view.getId();
-            if (viewId == R.id.tv_ui_confirm) {
-                autoDismiss();
-                if (mListener == null) {
-                    return;
-                }
-                mListener.onConfirm(getDialog());
-            } else if (viewId == R.id.tv_ui_cancel) {
-                autoDismiss();
-                if (mListener == null) {
-                    return;
-                }
-                mListener.onCancel(getDialog());
-            }
-        }
-    }
-
-    public interface OnListener {
-
-        /**
-         * 点击确定时回调
-         */
-        void onConfirm(BaseDialog dialog);
-
-        /**
-         * 点击取消时回调
-         */
-        default void onCancel(BaseDialog dialog) {
-        }
     }
 }
