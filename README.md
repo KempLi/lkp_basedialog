@@ -1,1 +1,1 @@
-implementation 'com.github.KempLi:lkp_basedialog:1.0.0'
+implementation 'com.github.KempLi:lkp_basedialog:版本号'
